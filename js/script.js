@@ -229,9 +229,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     
     // Call fallback after a delay to ensure DOM is fully loaded
-    setTimeout(disableAOSOnError, 1500);
-
-    // PDF Carousel functionality
+    setTimeout(disableAOSOnError, 1500);    // PDF Carousel functionality
     const setupPDFCarousel = () => {
         const carousel = document.querySelector('.pdf-carousel');
         if (!carousel) return;
@@ -313,5 +311,45 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     };
     
+    // Mobile PDF list functionality
+    const setupMobilePDFList = () => {
+        const pdfLinks = document.querySelectorAll('.mobile-pdf-list .pdf-link');
+        
+        pdfLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                // This will open the PDF in a new tab
+                // No need to prevent default as we want the normal link behavior
+                
+                // Optional: Add analytics or logging here
+                console.log('Mobile user opened PDF:', this.getAttribute('href'));
+            });
+        });
+    };
+    
+    // Check if we should show PDF carousel or mobile list
+    const updatePDFDisplayMode = () => {
+        const isMobile = window.innerWidth <= 768;
+        const pdfCarouselContainer = document.querySelector('.pdf-carousel-container');
+        const mobilePDFList = document.querySelector('.mobile-pdf-list');
+        
+        if (pdfCarouselContainer && mobilePDFList) {
+            if (isMobile) {
+                pdfCarouselContainer.style.display = 'none';
+                mobilePDFList.style.display = 'block';
+            } else {
+                pdfCarouselContainer.style.display = 'block';
+                mobilePDFList.style.display = 'none';
+            }
+        }
+    };
+    
+    // Initial setup
     setupPDFCarousel();
+    setupMobilePDFList();
+    updatePDFDisplayMode();
+    
+    // Update on window resize
+    window.addEventListener('resize', () => {
+        updatePDFDisplayMode();
+    });
 });

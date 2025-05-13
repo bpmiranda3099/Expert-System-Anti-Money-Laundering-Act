@@ -114,13 +114,33 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     };
-    
-    setupMobileNav();
+      setupMobileNav();
     
     // Re-setup mobile nav on window resize
     window.addEventListener('resize', () => {
         setupMobileNav();
+        updateLogoVisibility();
     });
+    
+    // Function to ensure correct logo visibility based on screen size
+    const updateLogoVisibility = () => {
+        const isMobile = window.innerWidth <= 768;
+        const logoFull = document.querySelector('.logo-full');
+        const logoShort = document.querySelector('.logo-short');
+        
+        if (logoFull && logoShort) {
+            if (isMobile) {
+                logoFull.style.display = 'none';
+                logoShort.style.display = 'inline-block';
+            } else {
+                logoFull.style.display = 'inline-block';
+                logoShort.style.display = 'none';
+            }
+        }
+    };
+    
+    // Initial call to ensure proper logo display
+    updateLogoVisibility();
     
     // Accessibility enhancement: Add focus states for keyboard navigation
     const enhanceAccessibility = () => {

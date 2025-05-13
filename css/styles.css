@@ -771,12 +771,13 @@ th {
         justify-content: center;
     }
     
+    /* Force these styles with !important to ensure they take precedence */
     .logo-full {
-        display: none;
+        display: none !important;
     }
     
     .logo-short {
-        display: inline-block;
+        display: inline-block !important;
     }
     
     .nav-links {
@@ -1203,5 +1204,16 @@ th {
 @media screen and (max-width: 1000px) and (min-width: 769px) {
     .logo {
         font-size: 1rem;
+    }
+}
+
+/* Ensure logo display on mobile explicitly */
+@media screen and (max-width: 768px) {
+    .logo-full {
+        display: none !important;
+    }
+    
+    .logo-short {
+        display: inline-block !important;
     }
 }

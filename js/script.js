@@ -15,23 +15,29 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Smooth scrolling for navigation links
     const navLinks = document.querySelectorAll('.nav-links a');
-    
-    navLinks.forEach(link => {
+      navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             
             const targetId = this.getAttribute('href');
             const targetSection = document.querySelector(targetId);
-              window.scrollTo({
-                top: targetSection.offsetTop - 70,
-                behavior: 'smooth'
-            });
             
-            // Refresh AOS animations after scrolling if AOS is available
-            if (hasAOS) {
-                setTimeout(function() {
-                    AOS.refresh();
-                }, 500);
+            if (targetSection) {
+                const headerOffset = 70; // Offset for fixed header
+                const elementPosition = targetSection.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+                
+                // Refresh AOS animations after scrolling if AOS is available
+                if (hasAOS) {
+                    setTimeout(function() {
+                        AOS.refresh();
+                    }, 500);
+                }
             }
         });
     });

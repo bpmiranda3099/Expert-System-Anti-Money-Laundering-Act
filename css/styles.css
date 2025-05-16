@@ -18,6 +18,11 @@
     padding: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 70px; /* This accounts for the fixed header */
+}
+
 body {
     font-family: 'Red Hat Display', sans-serif;
     margin: 0;

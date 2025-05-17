@@ -181,7 +181,6 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: stretch;
-    padding-left: 1rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
@@ -1081,6 +1080,7 @@ th {
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    display: block; /* Always visible on desktop */
 }
 
 .pdf-carousel {
@@ -1174,7 +1174,7 @@ th {
 
 /* Mobile PDF List Styles */
 .mobile-pdf-list {
-    display: none;
+    display: none; /* Hidden by default */
     list-style: none;
     margin: 1rem 0;
     padding: 0;
@@ -1211,11 +1211,11 @@ th {
 /* Responsive adjustments */
 @media screen and (max-width: 768px) {
     .pdf-carousel-container {
-        display: none;
+        display: none; /* Hide carousel on mobile */
     }
     
     .mobile-pdf-list {
-        display: block;
+        display: block; /* Show PDF links only on mobile */
     }
     
     .pdf-embed-container iframe {

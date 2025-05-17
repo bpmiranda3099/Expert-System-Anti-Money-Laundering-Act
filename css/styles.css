@@ -936,6 +936,11 @@ th {
 
     .nav-links.show {
         display: flex;
+        z-index: 2000;
+        border: 2px solid var(--accent-color);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+        min-height: 220px;
+        background-color: var(--primary-color);
     }
 
     .nav-links li {

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RA 9160</title>
+    <!-- CSS from index -->
+    <link rel="stylesheet" href="/css/styles.css" />    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f5f7fa;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .hidden {
+        display: none;
+      }
+      .options button {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+        padding: 12px 16px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s, transform 0.2s;
+      }
+      .options button:hover {
+        background-color: #45a049;
+        transform: translateY(-2px);
+      }
+      .options button:active {
+        transform: translateY(0);
+      }
+      .question {
+        font-size: 1.3rem;
+        margin-bottom: 25px;
+        font-weight: bold;
+        color: #2c3e50;
+      }
+      .questionContainer {
+        margin: 30px 0;
+        padding: 25px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: white;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      }
+      .penaltyDetails {
+        line-height: 1.8;
+      }
+    </style></head>
+  <body>
+
+    <!-- <header class="hero">
+      <div class="container">
+        <dotlottie-player
+          src="https://lottie.host/24d0884f-bac1-45c4-9331-deaecb0af34c/c7lKfzvUcM.lottie"
+          background="transparent"
+          speed="1"
+          class="hero-lottie"
+          loop
+          autoplay
+          data-aos="zoom-in"
+        ></dotlottie-player>
+        <h1 data-aos="fade-up" data-aos-delay="200">
+          Anti-Money Laundering Expert System
+        </h1>
+        <p data-aos="fade-up" data-aos-delay="300">
+          Your trusted resource for understanding and complying with the
+          Anti-Money Laundering Act in the Philippines providing expert
+          guidance.
+        </p>
+        <a
+          href="#services"
+          class="cta-button"
+          data-aos="fade-up"
+          data-aos-delay="400"
+          >Get Started</a
+        >
+      </div>
+    </header> -->    <div class="container">
+      <h1 style="text-align: center; margin-top: 30px; color: #333;">Anti-Money Laundering Act Expert System</h1>
+      <p style="text-align: center; margin-bottom: 30px; color: #666;">This expert system helps determine applicability of RA 9160 (Anti-Money Laundering Act) and its amendments based on your specific situation.</p>
+      
+      <div style="background-color: #e7f3fe; border-left: 4px solid #2196F3; padding: 15px; margin-bottom: 20px; border-radius: 4px;">
+        <p style="margin: 0"><strong>Disclaimer:</strong> This tool provides general guidance only and is not a substitute for professional legal advice. The assessment is based on the information you provide and should not be considered as definitive legal determination.</p>
+      </div>
+      
+      <div id="questionContainer" class="questionContainer">
+        <div id="question" class="question"></div>
+        <div id="options" class="options"></div>
+      </div>      <div id="result" class="result hidden">
+        <h2 style="color: #2c3e50; margin-bottom: 15px;">Assessment Result</h2>
+        <div id="penaltyDetails" class="penaltyDetails" style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #4CAF50;"></div>
+        <button id="restart" class="hidden" onclick="restartSystem()" style="background-color: #3498db; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">
+          Start Over
+        </button>
+      </div>
+    </div>
+
+    <!-- <footer>
+      <div class="footer-content" data-aos="fade-up">
+        <div class="footer-links">
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#resources">Resources</a>
+          <a href="#contact">Contact</a>
+          <a href="#team">Team</a>
+        </div>
+        <p>
+          An unofficial expert system for Anti-Money Laundering in compliance
+          for CS Elective 3 - Artificial Intelligence.
+        </p>
+        <br />
+        <p>&copy; 2025 AML Expert System. All rights reserved.</p>      </div>
+    </footer> -->
+    <script src="expert-script.js"></script>
+  </body>
+</html>

@@ -30,6 +30,6 @@ async function loadComponent(elementId, componentPath) {
 
 // Function to load all components
 async function loadComponents() {
-    await loadComponent('navbar-container', '../components/navbar.html');
-    await loadComponent('footer-container', '../components/footer.html');
+    await loadComponent('navbar-container', 'components/navbar.html');
+    await loadComponent('footer-container', 'components/footer.html');
 }

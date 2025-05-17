@@ -836,7 +836,7 @@ th {
     }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 900px) {
     nav {
         flex-direction: column;
         padding: 0;
@@ -874,7 +874,7 @@ th {
         align-items: center;
         height: var(--nav-height) !important;
         min-height: var(--nav-height) !important;
-        padding: 0 rem 0 0.5rem;
+        padding: 0 0.5rem;
         position: relative;
         box-sizing: border-box;
     }
@@ -955,59 +955,11 @@ th {
         padding-top: var(--nav-height) !important;
     }
 
-    /* Hero section responsive */
-    .hero h1 {
-        font-size: 2rem;
-    }
-
-    .hero p {
-        font-size: 1rem;
-    }
-
-    /* Service grid responsive */
-    .service-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-
-    /* Contact section responsive */
-    .contact-info {
-        padding: 1.5rem;
-    }
-
-    /* Footer responsive */
-    .footer-links {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .footer-links a {
-        margin: 0.5rem 0;
-    }
-
-    /* Breadcrumbs responsive */
+    /* Hide breadcrumbs on mobile */
     .breadcrumbs {
         display: none !important;
         border-bottom: none !important;
         padding: 0;
-    }
-
-    .navbar-flex {
-        align-items: center !important;
-    }
-
-    .breadcrumbs-list li {
-        font-size: 0.8rem;
-    }
-
-    /* Resource section responsive */
-    .resource-item {
-        margin-bottom: 0.75rem;
-    }
-
-    .resource-heading {
-        padding: 0.75rem;
-        font-size: 1rem;
     }
 }
 

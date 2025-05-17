@@ -839,97 +839,172 @@ th {
 @media screen and (max-width: 768px) {
     nav {
         flex-direction: column;
-        padding: 0.5rem;
+        padding: 0;
+        height: var(--nav-height) !important;
+        min-height: var(--nav-height) !important;
+        box-sizing: border-box;
     }
-    
-    .logo {
-        margin-bottom: 0.5rem;
+
+    .navbar-flex {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         width: 100%;
-        justify-content: center;
+        height: var(--nav-height) !important;
+        min-height: var(--nav-height) !important;
+        position: relative;
+        box-sizing: border-box;
     }
-      /* Force these styles with !important to ensure they take precedence */
+
+    .logo {
+        display: flex;
+        align-items: center;
+        flex: 1 1 0;
+        margin-bottom: 0;
+        width: auto;
+        justify-content: flex-start;
+        min-width: 0;
+        height: var(--nav-height) !important;
+        min-height: var(--nav-height) !important;
+        box-sizing: border-box;
+    }
+
+    .logo-container {
+        display: flex;
+        align-items: center;
+        height: var(--nav-height) !important;
+        min-height: var(--nav-height) !important;
+        padding: 0 rem 0 0.5rem;
+        position: relative;
+        box-sizing: border-box;
+    }
+
+    .logo-container::after {
+        display: none !important;
+        background: none !important;
+    }
+
     .logo-left, .logo-center {
         display: none !important;
     }
-    
+
     .logo-short {
-        display: inline-block !important;
+        display: block !important;
         font-size: 1.4rem;
+        text-align: center;
+        flex: 1 1 0;
+        margin: 0 auto;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
-    
+
+    .menu-toggle {
+        display: block;
+        position: absolute;
+        right: 0.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: var(--light-text);
+        font-size: 2rem;
+        cursor: pointer;
+        z-index: 2;
+        height: 40px;
+        width: 40px;
+        padding: 0;
+    }
+
     .nav-links {
         flex-direction: column;
-        width: 100%;
+        width: 90vw;
+        max-width: 340px;
         display: none;
         text-align: center;
+        position: fixed;
+        top: var(--nav-height);
+        right: 0;
+        left: auto;
+        background-color: var(--primary-color);
+        box-shadow: -2px 0 8px rgba(0,0,0,0.08);
+        border-radius: 0 0 0 16px;
+        z-index: 1100;
+        min-height: 0;
+        height: auto;
     }
-    
+
     .nav-links.show {
         display: flex;
     }
-    
+
     .nav-links li {
         margin: 0;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
+        width: 100%;
     }
-    
+
     .nav-links a {
         padding: 0.75rem 0;
         width: 100%;
         display: block;
     }
-    
-    .menu-toggle {
-        display: block;
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
+
+    /* Fix white container overlap below nav bar */
+    body {
+        padding-top: var(--nav-height) !important;
     }
-    
+
     /* Hero section responsive */
     .hero h1 {
         font-size: 2rem;
     }
-    
+
     .hero p {
         font-size: 1rem;
     }
-    
+
     /* Service grid responsive */
     .service-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
     }
-    
+
     /* Contact section responsive */
     .contact-info {
         padding: 1.5rem;
     }
-    
+
     /* Footer responsive */
     .footer-links {
         flex-direction: column;
         align-items: center;
     }
-    
+
     .footer-links a {
         margin: 0.5rem 0;
     }
-    
+
     /* Breadcrumbs responsive */
     .breadcrumbs {
-        padding: 0.5rem;
+        display: none !important;
+        border-bottom: none !important;
+        padding: 0;
     }
-    
+
+    .navbar-flex {
+        align-items: center !important;
+    }
+
     .breadcrumbs-list li {
         font-size: 0.8rem;
     }
-    
+
     /* Resource section responsive */
     .resource-item {
         margin-bottom: 0.75rem;
     }
-    
+
     .resource-heading {
         padding: 0.75rem;
         font-size: 1rem;

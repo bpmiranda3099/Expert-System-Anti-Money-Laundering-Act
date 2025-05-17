@@ -84,21 +84,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const nav = document.querySelector('nav');
         const logo = document.querySelector('.logo');
         
-        // Create hamburger menu button if it doesn't exist
-        if (!document.querySelector('.menu-toggle')) {
-            const menuToggle = document.createElement('button');
-            menuToggle.className = 'menu-toggle';
-            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-            menuToggle.setAttribute('aria-label', 'Toggle navigation menu');
-            
-            // Insert after the logo
-            nav.insertBefore(menuToggle, logo.nextSibling);
-            
-            // Toggle the nav-links visibility
-            menuToggle.addEventListener('click', () => {
-                const navLinks = document.querySelector('.nav-links');
+        // Toggle the nav-links visibility using the existing menu-toggle button
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        if (menuToggle && navLinks) {
+            // Remove any previous click event by resetting onclick
+            menuToggle.onclick = null;
+
+            menuToggle.addEventListener('click', function () {
                 navLinks.classList.toggle('show');
-                
                 // Change icon based on state
                 if (navLinks.classList.contains('show')) {
                     menuToggle.innerHTML = '<i class="fas fa-times"></i>';
@@ -106,13 +100,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
                 }
             });
-            
+
             // Close mobile menu when clicking on links
             const navLinkItems = document.querySelectorAll('.nav-links a');
             navLinkItems.forEach(item => {
-                item.addEventListener('click', () => {
+                item.onclick = null;
+                item.addEventListener('click', function () {
                     if (window.innerWidth <= 768) {
-                        const navLinks = document.querySelector('.nav-links');
                         navLinks.classList.remove('show');
                         menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
                     }

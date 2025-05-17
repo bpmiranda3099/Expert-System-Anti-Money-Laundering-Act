@@ -93,11 +93,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
             menuToggle.addEventListener('click', function () {
                 navLinks.classList.toggle('show');
-                // Change icon based on state
                 if (navLinks.classList.contains('show')) {
                     menuToggle.innerHTML = '<i class="fas fa-times"></i>';
+                    console.log('[NavDrawer] Drawer opened');
                 } else {
                     menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                    console.log('[NavDrawer] Drawer closed');
                 }
             });
 
@@ -109,9 +110,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (window.innerWidth <= 768) {
                         navLinks.classList.remove('show');
                         menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                        console.log('[NavDrawer] Drawer closed by link click');
                     }
                 });
             });
+
+            console.log('[NavDrawer] Mobile nav initialized');
         }
     };
       setupMobileNav();

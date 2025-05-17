@@ -1080,7 +1080,7 @@ th {
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    display: block; /* Always visible on desktop */
+    display: block; 
 }
 
 .pdf-carousel {
@@ -1174,7 +1174,7 @@ th {
 
 /* Mobile PDF List Styles */
 .mobile-pdf-list {
-    display: none; /* Hidden by default */
+    display: none;
     list-style: none;
     margin: 1rem 0;
     padding: 0;
@@ -1211,11 +1211,11 @@ th {
 /* Responsive adjustments */
 @media screen and (max-width: 768px) {
     .pdf-carousel-container {
-        display: none; /* Hide carousel on mobile */
+        display: none !important; /* Force hide carousel on mobile */
     }
     
     .mobile-pdf-list {
-        display: block; /* Show PDF links only on mobile */
+        display: block !important; /* Force show PDF links only on mobile */
     }
     
     .pdf-embed-container iframe {
@@ -1224,6 +1224,17 @@ th {
     
     .pdf-carousel-item h3 {
         font-size: 1rem;
+    }
+}
+
+/* Ensure PDF links are never shown on desktop */
+@media screen and (min-width: 769px) {
+    .mobile-pdf-list {
+        display: none !important; /* Force hide mobile PDF links on desktop */
+    }
+    
+    .pdf-carousel-container {
+        display: block !important; /* Force show carousel on desktop */
     }
 }
 

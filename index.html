@@ -41,35 +41,8 @@
     ></script>
   </head>
   <body>
-    <nav data-aos="fade-down" data-aos-duration="800">
-      <div class="logo">
-        <img
-          src="public/assets/icon/favicon.png"
-          alt="AML Logo"
-          class="nav-icon"
-        />
-        <span class="logo-left">Republic Act No. 9160</span>
-        <span class="logo-center">ANTI-MONEY LAUNDERING EXPERT SYSTEM</span>
-        <span class="logo-short">AML EXPERT SYSTEM</span>
-      </div>
-      <ul class="nav-links">
-        <li><a href="#about">ABOUT</a></li>
-        <li><a href="#services">SERVICES</a></li>
-        <li><a href="#resources">RESOURCES</a></li>
-        <li><a href="#contact">CONTACT</a></li>
-        <li><a href="#team">TEAM</a></li>
-      </ul>
-    </nav>
-
-    <!-- Breadcrumb navigation -->
-    <div class="breadcrumbs" data-aos="fade-down" data-aos-delay="100">
-      <div class="breadcrumbs-inner">
-        <ul class="breadcrumbs-list">
-          <li><a href="#">Home</a></li>
-          <li class="current">Anti-Money Laundering Expert System</li>
-        </ul>
-      </div>
-    </div>
+    <!-- Navigation will be loaded here -->
+    <div id="navbar-container"></div>
 
     <header class="hero">
       <div class="container">
@@ -367,55 +340,43 @@
         </div>
       </div>
     </section>
-
-    <footer>
-      <div class="footer-content" data-aos="fade-up">
-        <div class="footer-links">
-          <a href="#about">About</a>
-          <a href="#services">Services</a>
-          <a href="#resources">Resources</a>
-          <a href="#contact">Contact</a>
-          <a href="#team">Team</a>
-        </div>
-        <p>
-          An unofficial expert system for Anti-Money Laundering in compliance
-          for CS Elective 3 - Artificial Intelligence.
-        </p>
-        <br />
-        <p>&copy; 2025 AML Expert System. All rights reserved.</p>
-      </div>
-    </footer>
-
+    <!-- Footer will be loaded here -->
+    <div id="footer-container"></div>
+    <!-- Load JavaScript -->
+    <script src="js/components.js"></script>
     <script src="js/script.js"></script>
     <!-- AOS JS -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
-      // Initialize AOS after the DOM is fully loaded
+      // Initialize AOS and load components after the DOM is fully loaded
       document.addEventListener("DOMContentLoaded", function () {
-        setTimeout(function () {
-          try {
-            AOS.init({
-              duration: 800,
-              easing: "ease-in-out",
-              once: true,
-              mirror: false,
-              offset: 100,
-              delay: 100,
-              anchorPlacement: "top-bottom",
-              disable: window.innerWidth < 768 ? true : false,
-            });
-            // Add a class to body when AOS is successfully initialized
-            document.body.classList.add("aos-initialized");
-          } catch (e) {
-            console.warn("AOS initialization error:", e);
-            // Remove all data-aos attributes if there's an error
-            document.querySelectorAll("[data-aos]").forEach(function (el) {
-              el.removeAttribute("data-aos");
-              el.removeAttribute("data-aos-delay");
-              el.removeAttribute("data-aos-duration");
-            });
-          }
-        }, 100);
+        // Load components first
+        loadComponents().then(() => {
+          // Then initialize AOS
+          setTimeout(function () {
+            try {
+              AOS.init({
+                duration: 800,
+                easing: "ease-in-out",
+                once: true,
+                mirror: false,
+                offset: 100,
+                delay: 100,
+                anchorPlacement: "top-bottom",
+                disable: window.innerWidth < 768 ? true : false,
+              });
+              document.body.classList.add("aos-initialized");
+            } catch (e) {
+              console.warn("AOS initialization error:", e);
+              // Remove all data-aos attributes if there's an error
+              document.querySelectorAll("[data-aos]").forEach(function (el) {
+                el.removeAttribute("data-aos");
+                el.removeAttribute("data-aos-delay");
+                el.removeAttribute("data-aos-duration");
+              });
+            }
+          }, 100);
+        });
       });
     </script>
   </body>

@@ -9,6 +9,7 @@
     --medium-gray: #d6d7d9;
     --dark-gray: #323a45;
     --content-width: 1200px;
+    --nav-height: 64px;
 }
 
 /* Base Styles */
@@ -20,7 +21,7 @@
 
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: 70px; /* This accounts for the fixed header */
+    scroll-padding-top: calc(var(--nav-height) + 40px);
 }
 
 body {
@@ -30,7 +31,7 @@ body {
     color: var(--text-color);
     line-height: 1.3;
     background-color: #fff;
-    padding-top: 64px; /* Prevent content from being hidden under fixed nav */
+    padding-top: calc(var(--nav-height) + 44px); /* Account for both navbar and breadcrumbs */
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -180,14 +181,14 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: stretch;
-    padding: 0 1rem;
+    padding-left: 1rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
-    min-height: 64px;
+    height: var(--nav-height);
     overflow: visible;
 }
 
@@ -219,6 +220,7 @@ nav {
     pointer-events: none;
     top: 1rem;
     z-index: 1;
+    transition: all 0.3s ease;
 }
 
 .nav-icon {
@@ -667,9 +669,15 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
     background-color: #f9f9f9;
     padding: 0.75rem 1rem;
     border-bottom: 1px solid var(--medium-gray);
+    position: fixed;
+    width: 100%;
+    top: var(--nav-height);
+    left: 0;
+    z-index: 999;
 }
 
 .breadcrumbs-inner {
+    padding-top: 0.4rem;
     max-width: var(--content-width);
     margin: 0 auto;
     display: flex;
@@ -1268,5 +1276,87 @@ th {
     
     .logo-short {
         display: inline-block !important;
+    }
+}
+
+/* Make logo center responsive */
+.logo-center {
+    font-size: 1.8rem;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    text-align: center;
+    pointer-events: none;
+    top: 1rem;
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+
+/* Update media queries for better responsiveness */
+@media screen and (max-width: 1024px) {
+    .logo-center {
+        font-size: 1.4rem; /* Reduce font size first */
+    }
+}
+
+@media screen and (max-width: 900px) {
+    /* Switch to mobile view before overlap occurs */
+    .menu-toggle {
+        display: block;
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 2;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: var(--nav-height);
+        left: 0;
+        right: 0;
+        background-color: var(--primary-color);
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 0;
+        display: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+
+    .nav-links li {
+        width: 100%;
+        text-align: center;
+        padding: 0.5rem 1rem;
+    }
+
+    .nav-links li::before {
+        display: none;
+    }
+
+    .nav-links a {
+        width: 100%;
+        padding: 0.75rem 0;
+        justify-content: center;
+    }
+
+    .logo-center {
+        position: static;
+        transform: none;
+        margin: 0 auto;
+        font-size: 1.6rem;
+    }
+
+    .logo {
+        justify-content: flex-start;
+        padding-right: 50px; /* Make room for menu toggle */
+    }
+
+    nav {
+        flex-wrap: wrap;
     }
 }

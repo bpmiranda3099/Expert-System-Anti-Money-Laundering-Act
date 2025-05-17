@@ -1,6 +1,6 @@
 // AML Expert System Javascript
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     // Check if AOS is available before using it
     const hasAOS = typeof AOS !== 'undefined';
     
@@ -13,15 +13,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // Wait for navbar to be loaded before attaching nav logic
+    if (typeof loadComponents === "function") {
+        await loadComponents();
+    }
+
     // Smooth scrolling for navigation links
     const navLinks = document.querySelectorAll('.nav-links a');
-      navLinks.forEach(link => {
+    navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            
+
             const targetId = this.getAttribute('href');
             const targetSection = document.querySelector(targetId);
-            
+
             if (targetSection) {
                 const headerOffset = 70; // Offset for fixed header
                 const elementPosition = targetSection.getBoundingClientRect().top;
@@ -31,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     top: offsetPosition,
                     behavior: 'smooth'
                 });
-                
+
                 // Refresh AOS animations after scrolling if AOS is available
                 if (hasAOS) {
                     setTimeout(function() {
@@ -94,10 +99,10 @@ document.addEventListener('DOMContentLoaded', function() {
             menuToggle.addEventListener('click', function () {
                 navLinks.classList.toggle('show');
                 if (navLinks.classList.contains('show')) {
-                    menuToggle.innerHTML = '<i class="fas fa-times"></i>';
+menuToggle.innerHTML = '<i class="bi bi-x"></i>';
                     console.log('[NavDrawer] Drawer opened');
                 } else {
-                    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+menuToggle.innerHTML = '<i class="bi bi-list"></i>';
                     console.log('[NavDrawer] Drawer closed');
                 }
             });

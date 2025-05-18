@@ -226,24 +226,19 @@ document.addEventListener('DOMContentLoaded', function() {
   const resultElement = document.getElementById("result");
   const penaltyDetailsElement = document.getElementById("penaltyDetails");
   const restartButton = document.getElementById("restart");
-
   // Create speech synthesis utterance
   const speech = new SpeechSynthesisUtterance();
   speech.rate = 0.9; // Slightly slower rate for better understanding
-  speech.pitch = 1.2; // Slightly higher pitch for female voice
+  speech.pitch = 1; // Natural pitch
   speech.volume = 1;
+  speech.lang = 'en-US'; // Set language to English
 
-  // Wait for voices to be loaded
+  // Set Microsoft Zira voice when available (mature female voice)
   window.speechSynthesis.addEventListener('voiceschanged', () => {
     const voices = window.speechSynthesis.getVoices();
-    // Find the first female voice (most systems have "Microsoft Zira")
-    const femaleVoice = voices.find(voice => 
-      voice.name.includes('female') || 
-      voice.name.includes('Zira') || 
-      voice.name.includes('Samantha')
-    );
-    if (femaleVoice) {
-      speech.voice = femaleVoice;
+    const ziraVoice = voices.find(voice => voice.name === 'Microsoft Zira Desktop');
+    if (ziraVoice) {
+      speech.voice = ziraVoice;
     }
   });
 

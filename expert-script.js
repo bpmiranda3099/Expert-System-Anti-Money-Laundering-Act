@@ -1,16 +1,15 @@
 const questions = [
   {
-    question: "Is your business supervised by an Insurance Company?", //0
+    question: "Are you using this as a citizen or as a business/professional?", //0
     options: [
-      { text: "Yes", nextIndex: 1 },
-      { text: "No", nextIndex: 1 },
+      { text: "I'm a citizen", nextIndex: 16 },
+      { text: "I'm a business/professional", nextIndex: 1 },
     ],
-  },
-  {
-    question: "Does your business deal with the Securities and Exchange Commission?", //1
+  },  {
+    question: "Does your business deal with the Securities and Exchange Commission?", //2
     options: [
-      { text: "Yes", nextIndex: 4 },
-      { text: "No", nextIndex: 2 },
+      { text: "Yes", nextIndex: 5 },
+      { text: "No", nextIndex: 3 },
     ],
   },
   {
@@ -112,11 +111,93 @@ const questions = [
       { text: "Yes", result: "penalty_rule17_3" },
       { text: "No", result: "result7" }, 
     ],
-  }
+  },
+
+  // Citizen-focused questions 
+  {
+    question: "Do you prefer cash transactions over using banks or online transfers?", //16
+    options: [
+      { text: "Yes", nextIndex: 17 },
+      { text: "No", nextIndex: 18 },
+    ],
+  },  {
+    question: "Are you handling financial transactions on behalf of someone else?", //17
+    options: [
+      { text: "Yes", nextIndex: 19 },
+      { text: "No", nextIndex: 18 },
+    ],
+  },{
+    question: "Have you received funds that you cannot clearly explain the source of?", //18
+    options: [
+      { text: "Yes", nextIndex: 20 },
+      { text: "No", result: "not_covered" },
+    ],
+  },  {
+    question: "Have you made any large purchases recently, like a car or a house, that are not in line with your known income?", //19
+    options: [
+      { text: "Yes", nextIndex: 20 },
+      { text: "No", nextIndex: 21 },
+    ],
+  },{
+    question: "Have you declared the source and purpose of the funds involved in these transactions?", //20
+    options: [
+      { text: "Yes", nextIndex: 21 },
+      { text: "No", result: "suspicious_transaction" },
+    ],
+  },  {
+    question: "Have these transactions been reported to the Anti-Money Laundering Council (AMLC) as Covered or Suspicious Transactions?", //21
+    options: [
+      { text: "Yes", nextIndex: 22 },
+      { text: "No", nextIndex: 23 },
+    ],
+  },  {
+    question: "Have you been notified or served a freeze order related to these transactions?", //22
+    options: [
+      { text: "Yes", nextIndex: 24 },
+      { text: "No", result: "monitor_activity" },
+    ],
+  },  {
+    question: "Do these transactions deviate from your known financial behavior or declared occupation?", //23
+    options: [
+      { text: "Yes", nextIndex: 22 },
+      { text: "No", result: "basic_due_diligence" },
+    ],
+  },  {
+    question: "Did you cooperate with authorities when requested to provide documentation?", //24
+    options: [
+      { text: "Yes", result: "not_guilty" },
+      { text: "No", result: "penalty_obstruction" },
+    ],
+  },
+  
 ];
 
-//results (no penalties yet based on the flowchart actions)
+
 const penalties = {
+  not_guilty: {
+    label: "Not Guilty",
+    info: "Based on your answers, you have been compliant with Anti-Money Laundering regulations. Cooperation with authorities when requested is a key element of following the law. Remember to always maintain proper documentation of significant financial transactions."
+  },
+  not_covered: {
+    label: "Result: Not Covered",
+    info: "Based on your responses, your transactions do not appear to fall under the specific covered or suspicious transaction categories defined in the Anti-Money Laundering Act. However, it's always good practice to maintain proper documentation of all significant financial transactions."
+  },
+  suspicious_transaction: {
+    label: "Result: Suspicious Transaction - Subject to Reporting",
+    info: "Not declaring the source and purpose of funds for significant transactions may classify them as 'suspicious transactions' under the Anti-Money Laundering Act. Reference: AMLA Section 9(b), Rule 14.A. Financial institutions are required to report such transactions to the Anti-Money Laundering Council. It's important to always be transparent about the source and purpose of funds in significant financial transactions."
+  },
+  monitor_activity: {
+    label: "Result: Monitor Activity",
+    info: "When no freeze order has been issued but transactions have been reported as covered or suspicious, it's important to continue monitoring your financial activities. Keep detailed records of all significant transactions, their sources, and purposes. Be prepared to provide documentation if requested by authorities."
+  },
+  basic_due_diligence: {
+    label: "Result: Basic Due Diligence",
+    info: "For individuals who don't prefer cash transactions over banks or online transfers, basic due diligence practices apply. This includes verifying your identity with financial institutions and providing basic information about your transactions when required. This level of scrutiny is standard for normal banking operations."
+  },
+  penalty_obstruction: {
+    label: "Penalty: Obstruction of Investigation",
+    info: "Failure to cooperate with authorities when requested to provide documentation related to transactions may be considered obstruction of investigation under the Anti-Money Laundering Act. Reference: AMLA Section 14(c), Rule 17.4. This could lead to penalties including fines and possible criminal charges."
+  },
   result1: {
     label: "Not Guilty",
     info: "Good news! Based on your answers, the main rules of the Anti-Money Laundering Act don\'t seem to apply to you right now. Still, it\'s a good idea to keep an eye on these rules, as they might affect your business later on."
@@ -215,6 +296,7 @@ const penalties = {
   }
 };
 
+// Start with the user type selection question
 let currentQuestionIndex = 0;
 
 // Wait for DOM to be loaded before attaching event listeners

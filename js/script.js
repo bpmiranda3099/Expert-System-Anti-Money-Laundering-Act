@@ -18,6 +18,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         await loadComponents();
     }
 
+    // Listen for hash changes to update the portfolio link
+    window.addEventListener('hashchange', function() {
+        updatePortfolioLink();
+    });
+
     // Smooth scrolling for navigation links
     const navLinks = document.querySelectorAll('.nav-links a');
     navLinks.forEach(link => {

@@ -16,6 +16,9 @@ async function loadComponent(elementId, componentPath) {
         if (typeof AOS !== 'undefined') {
             AOS.refresh();
         }
+        
+        // Update the portfolio link after loading navbar
+        updatePortfolioLink();
     } catch (error) {
         console.error(`Error loading component ${componentPath} into ${elementId}:`, error);
         // Add a visual indicator for development
@@ -25,6 +28,26 @@ async function loadComponent(elementId, componentPath) {
                 <small>${error.message}</small>
             </div>
         `;
+    }
+}
+
+// Function to update the portfolio link based on URL hash
+function updatePortfolioLink() {
+    const currentUrl = window.location.href;
+    const portfolioLink = document.querySelector('.logo-container[href=""]');
+    
+    if (portfolioLink) {
+        // Set the href based on URL hash condition
+        if (currentUrl.includes('#cepeda')) {
+            portfolioLink.href = 'http://localhost:8080';
+        } else if (currentUrl.includes('#miranda')) {
+            portfolioLink.href = 'https://bpmiranda3099.github.io/';
+        } else {
+            // Default link when no specific hash is present
+            portfolioLink.href = '#';
+        }
+        
+        console.log('Portfolio link updated to:', portfolioLink.href);
     }
 }
 
@@ -64,7 +87,13 @@ async function loadExpertNavbar() {
               alt="AML Logo"
               class="nav-icon"
             />
-            <span class="logo-left">Republic Act No. 9160</span>
+            <span class="logo-left">Republic Act No. 9160</span>          </a>
+          <a
+            href=""
+            class="logo-container"
+            style="text-decoration: none; color: inherit"
+          >
+            <span class="logo-left">Portfolio</span>
           </a>
           <span class="logo-center">ANTI-MONEY LAUNDERING EXPERT SYSTEM</span>
           <span class="logo-short">AMLA EXPERT SYSTEM</span>
@@ -110,8 +139,10 @@ async function loadExpertNavbar() {
       </div>
     </div>
     `;
+      navbarContainer.innerHTML = customNavbar;
     
-    navbarContainer.innerHTML = customNavbar;
+    // Update portfolio link for the expert page
+    updatePortfolioLink();
     
     // Add event listeners for the drawer functionality
     setupInfoDrawer();

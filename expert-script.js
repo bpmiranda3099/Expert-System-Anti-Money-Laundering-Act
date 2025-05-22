@@ -455,6 +455,30 @@ let selectedEntityType = null;
 let currentQuestionIndex = 0;
 let filteredQuestions = [];
 
+// Function to save state to localStorage
+function saveState() {
+  localStorage.setItem('selectedEntityType', selectedEntityType);
+  localStorage.setItem('currentQuestionIndex', currentQuestionIndex);
+  localStorage.setItem('filteredQuestions', JSON.stringify(filteredQuestions));
+}
+
+// Function to load state from localStorage
+function loadState() {
+  const savedEntityType = localStorage.getItem('selectedEntityType');
+  const savedQuestionIndex = localStorage.getItem('currentQuestionIndex');
+  const savedFilteredQuestions = localStorage.getItem('filteredQuestions');
+
+  if (savedEntityType) {
+    selectedEntityType = savedEntityType;
+  }
+  if (savedQuestionIndex) {
+    currentQuestionIndex = parseInt(savedQuestionIndex, 10);
+  }
+  if (savedFilteredQuestions) {
+    filteredQuestions = JSON.parse(savedFilteredQuestions);
+  }
+}
+
 // Wait for DOM to be loaded before attaching event listeners
 document.addEventListener('DOMContentLoaded', function() {
   // Get DOM elements
@@ -464,7 +488,10 @@ document.addEventListener('DOMContentLoaded', function() {
   const resultElement = document.getElementById("result");
   const penaltyDetailsElement = document.getElementById("penaltyDetails");
   const restartButton = document.getElementById("restart");
-    // Function to handle entity selection
+    // Load state from localStorage when the page loads
+  loadState();
+
+  // Function to handle entity selection
   function selectEntity(entityId) {
     selectedEntityType = entityId;
     
@@ -473,6 +500,9 @@ document.addEventListener('DOMContentLoaded', function() {
       question: questions[index],
       index: index
     }));
+    
+    // Save state to localStorage
+    saveState();
     
     // Add transition to entity selection container
     const entityContainer = document.getElementById("entitySelectionContainer");
@@ -916,6 +946,11 @@ document.addEventListener('DOMContentLoaded', function() {
       }, 200);
       
     }, 400); // Match this delay with the CSS transition duration
+
+    // Clear state from localStorage
+    localStorage.removeItem('selectedEntityType');
+    localStorage.removeItem('currentQuestionIndex');
+    localStorage.removeItem('filteredQuestions');
   }
 });
 

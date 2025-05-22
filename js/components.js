@@ -28,8 +28,149 @@ async function loadComponent(elementId, componentPath) {
     }
 }
 
+// Check if current page is expert.html
+function isExpertPage() {
+    return window.location.pathname.includes('expert.html');
+}
+
 // Function to load all components
 async function loadComponents() {
-    await loadComponent('navbar-container', 'components/navbar.html');
+    // Load the appropriate navbar based on current page
+    if (isExpertPage()) {
+        await loadExpertNavbar();
+    } else {
+        await loadComponent('navbar-container', 'components/navbar.html');
+    }
+    
     await loadComponent('footer-container', 'components/footer.html');
+}
+
+// Function to create custom expert system navbar with info button
+async function loadExpertNavbar() {
+    const navbarContainer = document.getElementById('navbar-container');
+    
+    // Create custom navbar with info button
+    const customNavbar = `
+    <nav data-aos="fade-down" data-aos-duration="800">
+      <div class="navbar-flex">
+        <div class="logo">
+          <a
+            href="http://www.amlc.gov.ph/"
+            class="logo-container"
+            style="text-decoration: none; color: inherit"
+          >
+            <img
+              src="public/assets/icon/favicon.png"
+              alt="AML Logo"
+              class="nav-icon"
+            />
+            <span class="logo-left">Republic Act No. 9160</span>
+          </a>
+          <span class="logo-center">ANTI-MONEY LAUNDERING EXPERT SYSTEM</span>
+          <span class="logo-short">AMLA EXPERT SYSTEM</span>
+        </div>
+        
+        <!-- Info button that opens the drawer -->
+        <button id="info-button" class="info-button" aria-label="Show information">
+          <i class="fas fa-info-circle"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Info drawer overlay -->
+    <div id="info-drawer-overlay" class="info-drawer-overlay hidden"></div>
+
+    <!-- Info drawer -->
+    <div id="info-drawer" class="info-drawer hidden">
+      <div class="info-drawer-header">
+        <h2>Important Information</h2>
+        <button id="close-drawer" class="close-drawer-button">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="info-drawer-content">
+        <div class="disclaimer-box" data-aos="fade-left" data-aos-duration="800" data-aos-delay="100">
+          <p>
+            <strong>Disclaimer:</strong> This tool provides general guidance
+            only and is not a substitute for professional legal advice. The
+            assessment is based on the information you provide and should not be
+            considered as definitive legal determination.
+          </p>
+        </div>
+        
+        <div class="disclaimer-box note-box" data-aos="fade-left" data-aos-duration="800" data-aos-delay="200">
+          <p>
+            <strong>Note:</strong> The Anti-Money Laundering Act (RA 9160) and
+            its amendments apply differently to various entity types. Financial
+            institutions face the strictest requirements, while DNFBPs and other
+            businesses have varying levels of obligations. Individuals also have
+            responsibilities in certain situations.
+          </p>
+        </div>
+      </div>
+    </div>
+    `;
+    
+    navbarContainer.innerHTML = customNavbar;
+    
+    // Add event listeners for the drawer functionality
+    setupInfoDrawer();
+}
+
+// Setup event listeners for info drawer
+function setupInfoDrawer() {
+    const infoButton = document.getElementById('info-button');
+    const infoDrawer = document.getElementById('info-drawer');
+    const overlay = document.getElementById('info-drawer-overlay');
+    const closeButton = document.getElementById('close-drawer');
+    const drawerContent = document.querySelector('.info-drawer-content');
+    
+    if (infoButton && infoDrawer && overlay && closeButton) {
+        infoButton.addEventListener('click', () => {
+            infoDrawer.classList.remove('hidden');
+            overlay.classList.remove('hidden');
+            document.body.classList.add('drawer-open');
+            
+            // Add AOS animations to drawer content elements with a slight delay
+            if (drawerContent) {
+                setTimeout(() => {
+                    const contentItems = drawerContent.children;
+                    Array.from(contentItems).forEach((item, index) => {
+                        // Add animation classes and data attributes for smooth entry
+                        item.setAttribute('data-aos', 'fade-left');
+                        item.setAttribute('data-aos-delay', (index * 100 + 100).toString());
+                        item.setAttribute('data-aos-duration', '800');
+                        
+                        // Initialize AOS for these new elements
+                        if (typeof AOS !== 'undefined') {
+                            AOS.refresh();
+                        }
+                    });
+                }, 300); // Delay to ensure drawer is visible first
+            }
+        });
+        
+        closeButton.addEventListener('click', closeDrawer);
+        overlay.addEventListener('click', closeDrawer);
+        
+        function closeDrawer() {
+            // First fade out the content
+            if (drawerContent) {
+                const contentItems = drawerContent.children;
+                Array.from(contentItems).forEach(item => {
+                    // Remove AOS attributes to reset for next opening
+                    item.removeAttribute('data-aos');
+                    item.removeAttribute('data-aos-delay');
+                    item.removeAttribute('data-aos-duration');
+                });
+            }
+            
+            // Then close the drawer with a slight delay
+            setTimeout(() => {
+                infoDrawer.classList.add('hidden');
+                overlay.classList.add('hidden');
+                document.body.classList.remove('drawer-open');
+            }, 100);
+        }
+    }
 }

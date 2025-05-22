@@ -37,24 +37,44 @@ function updatePortfolioLink() {
     const portfolioLink = document.querySelector('.logo-container[href=""]');
     
     if (portfolioLink) {
-        // Set the href based on URL hash condition
+        // Check for hash in current URL
+        let hashValue = '';
+        
         if (currentUrl.includes('#cepeda')) {
+            hashValue = 'cepeda';
             portfolioLink.href = 'http://localhost:8080';
         } else if (currentUrl.includes('#miranda')) {
+            hashValue = 'miranda';
             portfolioLink.href = 'https://bpmiranda3099.github.io/';
         } else {
-            // Default link when no specific hash is present
-            portfolioLink.href = '#';
+            // Check if we have a stored hash value from previous page
+            const storedHash = localStorage.getItem('portfolioHash');
+            
+            if (storedHash === 'cepeda') {
+                portfolioLink.href = 'http://localhost:8080';
+                hashValue = 'cepeda';
+            } else if (storedHash === 'miranda') {
+                portfolioLink.href = 'https://bpmiranda3099.github.io/';
+                hashValue = 'miranda';
+            } else {
+                // Default link when no specific hash is present
+                portfolioLink.href = '#';
+            }
         }
         
-        console.log('Portfolio link updated to:', portfolioLink.href);
+        // Store the hash value for persistence across pages
+        if (hashValue) {
+            localStorage.setItem('portfolioHash', hashValue);
+        }
+        
+        console.log('Portfolio link updated to:', portfolioLink.href, 'Hash:', hashValue);
     }
 }
 
 // Listen for hash changes to update the portfolio link
 window.addEventListener('hashchange', updatePortfolioLink);
 
-// Also update portfolio link when the DOM is fully loaded
+// Update the portfolio link on page load
 document.addEventListener('DOMContentLoaded', function() {
     // Check if navbar is already loaded
     if (document.querySelector('.logo-container[href=""]')) {
@@ -77,6 +97,12 @@ async function loadComponents() {
     }
     
     await loadComponent('footer-container', 'components/footer.html');
+    
+    // After all components are loaded, update the portfolio link and setup hash preservation
+    updatePortfolioLink();
+    preserveHashNavigation();
+    
+    return true; // Return a value to indicate completion
 }
 
 // Function to create custom expert system navbar with info button
@@ -216,3 +242,32 @@ function setupInfoDrawer() {
         }
     }
 }
+
+// Function to preserve hash during page navigation
+function preserveHashNavigation() {
+    // Get all internal navigation links
+    const internalLinks = document.querySelectorAll('a[href^="index.html"], a[href^="expert.html"]');
+    
+    internalLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const storedHash = localStorage.getItem('portfolioHash');
+            
+            // If we have a stored hash, make sure it's appended to the destination URL
+            if (storedHash) {
+                const currentHref = this.getAttribute('href');
+                
+                // Only modify if the link doesn't already have a hash
+                if (!currentHref.includes('#')) {
+                    this.setAttribute('href', `${currentHref}#${storedHash}`);
+                }
+            }
+        });
+    });
+}
+
+// Initialize the navigation preserving function after components are loaded
+document.addEventListener('DOMContentLoaded', function() {
+    loadComponents().then(() => {
+        preserveHashNavigation();
+    });
+});

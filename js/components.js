@@ -34,40 +34,64 @@ async function loadComponent(elementId, componentPath) {
 // Function to update the portfolio link based on URL hash
 function updatePortfolioLink() {
     const currentUrl = window.location.href;
-    const portfolioLink = document.querySelector('.logo-container[href=""]');
+    const portfolioLinks = document.querySelectorAll('.logo-container[href=""], .portfolio-nav-link');
     
-    if (portfolioLink) {
+    if (portfolioLinks.length > 0) {
         // Check for hash in current URL
         let hashValue = '';
+        let portfolioUrl = '';
         
         if (currentUrl.includes('#cepeda')) {
             hashValue = 'cepeda';
-            portfolioLink.href = 'http://localhost:8080';
+            portfolioUrl = 'http://localhost:8080';
         } else if (currentUrl.includes('#miranda')) {
             hashValue = 'miranda';
-            portfolioLink.href = 'https://bpmiranda3099.github.io/';
+            portfolioUrl = 'https://bpmiranda3099.github.io/';
+        } else if (currentUrl.includes('#romero')) {
+            hashValue = 'romero';
+            portfolioUrl = 'http://localhost:1';
+        } else if (currentUrl.includes('#santos')) {
+            hashValue = 'santos';
+            portfolioUrl = 'http://localhost:2';
+        } else if (currentUrl.includes('#tafalla')) {
+            hashValue = 'tafalla';
+            portfolioUrl = 'http://localhost:3';
         } else {
             // Check if we have a stored hash value from previous page
             const storedHash = localStorage.getItem('portfolioHash');
             
             if (storedHash === 'cepeda') {
-                portfolioLink.href = 'http://localhost:8080';
+                portfolioUrl = 'http://localhost:8080';
                 hashValue = 'cepeda';
             } else if (storedHash === 'miranda') {
-                portfolioLink.href = 'https://bpmiranda3099.github.io/';
+                portfolioUrl = 'https://bpmiranda3099.github.io/';
                 hashValue = 'miranda';
+            } else if (storedHash === 'romero') {
+                portfolioUrl = 'http://localhost:1';
+                hashValue = 'romero';
+            } else if (storedHash === 'santos') {
+                portfolioUrl = 'http://localhost:2';
+                hashValue = 'santos';
+            } else if (storedHash === 'tafalla') {
+                portfolioUrl = 'http://localhost:3';
+                hashValue = 'tafalla';
             } else {
                 // Default link when no specific hash is present
-                portfolioLink.href = '#';
+                portfolioUrl = '#';
             }
         }
+        
+        // Update all portfolio links (both in header and mobile nav)
+        portfolioLinks.forEach(link => {
+            link.href = portfolioUrl;
+        });
         
         // Store the hash value for persistence across pages
         if (hashValue) {
             localStorage.setItem('portfolioHash', hashValue);
         }
         
-        console.log('Portfolio link updated to:', portfolioLink.href, 'Hash:', hashValue);
+        console.log('Portfolio links updated to:', portfolioUrl, 'Hash:', hashValue);
     }
 }
 
@@ -100,6 +124,7 @@ async function loadComponents() {
     
     // After all components are loaded, update the portfolio link and setup hash preservation
     updatePortfolioLink();
+    updateMobilePortfolioLink();
     preserveHashNavigation();
     
     return true; // Return a value to indicate completion
@@ -135,12 +160,24 @@ async function loadExpertNavbar() {
           <span class="logo-center">ANTI-MONEY LAUNDERING EXPERT SYSTEM</span>
           <span class="logo-short">AMLA EXPERT SYSTEM</span>
         </div>
-        
-        <!-- Info button that opens the drawer -->
+          <!-- Info button that opens the drawer -->
         <button id="info-button" class="info-button" aria-label="Show information">
           <i class="fas fa-info-circle"></i>
         </button>
+        
+        <button class="menu-toggle" aria-label="Open navigation">
+          <i class="bi bi-list"></i>
+        </button>
       </div>
+      
+      <ul class="nav-links">
+        <li><a href="index.html#about">ABOUT</a></li>
+        <li><a href="index.html#services">SERVICES</a></li>
+        <li><a href="index.html#resources">RESOURCES</a></li>
+        <li><a href="index.html#contact">CONTACT</a></li>
+        <li><a href="index.html#team">TEAM</a></li>
+        <li class="mobile-portfolio-link"><a href="" class="portfolio-nav-link">PORTFOLIO</a></li>
+      </ul>
     </nav>
 
     <!-- Info drawer overlay -->
@@ -174,12 +211,12 @@ async function loadExpertNavbar() {
           </p>
         </div>
       </div>
-    </div>
-    `;
+    </div>    `;
       navbarContainer.innerHTML = customNavbar;
     
     // Update portfolio link for the expert page
     updatePortfolioLink();
+    updateMobilePortfolioLink();
     
     // Add event listeners for the drawer functionality
     setupInfoDrawer();
@@ -263,11 +300,40 @@ function preserveHashNavigation() {
             }
         });
     });
+    
+    // Update the portfolio link in mobile navigation
+    updateMobilePortfolioLink();
+}
+
+// Function to specifically update mobile portfolio link
+function updateMobilePortfolioLink() {
+    const portfolioNavLink = document.querySelector('.portfolio-nav-link');
+    const storedHash = localStorage.getItem('portfolioHash');
+    
+    if (portfolioNavLink) {
+        let portfolioUrl = '#';
+        
+        if (storedHash === 'cepeda') {
+            portfolioUrl = 'http://localhost:8080';
+        } else if (storedHash === 'miranda') {
+            portfolioUrl = 'https://bpmiranda3099.github.io/';
+        } else if (storedHash === 'romero') {
+            portfolioUrl = 'http://localhost:1';
+        } else if (storedHash === 'santos') {
+            portfolioUrl = 'http://localhost:2';
+        } else if (storedHash === 'tafalla') {
+            portfolioUrl = 'http://localhost:3';
+        }
+        
+        portfolioNavLink.href = portfolioUrl;
+        console.log('Mobile portfolio link updated to:', portfolioUrl);
+    }
 }
 
 // Initialize the navigation preserving function after components are loaded
 document.addEventListener('DOMContentLoaded', function() {
     loadComponents().then(() => {
         preserveHashNavigation();
+        updateMobilePortfolioLink();
     });
 });

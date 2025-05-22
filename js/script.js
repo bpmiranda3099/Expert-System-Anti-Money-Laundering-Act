@@ -110,20 +110,21 @@ menuToggle.innerHTML = '<i class="bi bi-x"></i>';
 menuToggle.innerHTML = '<i class="bi bi-list"></i>';
                     console.log('[NavDrawer] Drawer closed');
                 }
-            });
-
-            // Close mobile menu when clicking on links
+            });            // Close mobile menu when clicking on links
             const navLinkItems = document.querySelectorAll('.nav-links a');
             navLinkItems.forEach(item => {
                 item.onclick = null;
                 item.addEventListener('click', function () {
                     if (window.innerWidth <= 768) {
                         navLinks.classList.remove('show');
-                        menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                        menuToggle.innerHTML = '<i class="bi bi-list"></i>';
                         console.log('[NavDrawer] Drawer closed by link click');
                     }
                 });
             });
+            
+            // Ensure portfolio link in mobile nav has correct href
+            updateMobilePortfolioLink();
 
             console.log('[NavDrawer] Mobile nav initialized');
         }

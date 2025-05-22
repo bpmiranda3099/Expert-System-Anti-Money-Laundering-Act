@@ -948,6 +948,15 @@ th {
         border-top: 1px solid rgba(255, 255, 255, 0.1);
         width: 100%;
     }
+      /* Portfolio link in mobile navigation */
+    .mobile-portfolio-link {
+        display: block;
+    }
+    
+    .mobile-portfolio-link a {
+        font-weight: 500;
+        color: var(--accent-color) !important;
+    }
 
     .nav-links a {
         padding: 0.75rem 0;

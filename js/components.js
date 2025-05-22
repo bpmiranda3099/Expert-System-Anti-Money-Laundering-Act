@@ -51,6 +51,17 @@ function updatePortfolioLink() {
     }
 }
 
+// Listen for hash changes to update the portfolio link
+window.addEventListener('hashchange', updatePortfolioLink);
+
+// Also update portfolio link when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if navbar is already loaded
+    if (document.querySelector('.logo-container[href=""]')) {
+        updatePortfolioLink();
+    }
+});
+
 // Check if current page is expert.html
 function isExpertPage() {
     return window.location.pathname.includes('expert.html');

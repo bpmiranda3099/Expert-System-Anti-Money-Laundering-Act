@@ -1506,4 +1506,13 @@ th {
     opacity: 0;
 }
 
+/* Hide nav-links when the body has the 'expert-page' class */
+.expert-page .nav-links {
+    display: none;
+}
+
+/* If you also want to hide the menu toggle button on expert.html */
+.expert-page .menu-toggle {
+    display: none;
+}
 /* Option Button Animation */

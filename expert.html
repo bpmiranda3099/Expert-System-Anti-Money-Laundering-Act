@@ -680,5 +680,24 @@
         });
       });
     </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the current page's filename
+        const currentPage = window.location.pathname.split('/').pop();
+
+        // Check if the current page is expert.html
+        if (currentPage === 'expert.html') {
+            const navLinks = document.querySelector('.nav-links');
+            const menuToggle = document.querySelector('.menu-toggle');
+
+            if (navLinks) {
+                navLinks.style.display = 'none'; // Hides the <ul> of nav links
+            }
+            if (menuToggle) {
+                menuToggle.style.display = 'none'; // Hides the menu toggle button
+            }
+        }
+    });
+</script>
   </body>
 </html>

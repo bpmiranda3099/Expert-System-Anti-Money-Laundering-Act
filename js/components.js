@@ -43,7 +43,7 @@ function updatePortfolioLink() {
         
         if (currentUrl.includes('#cepeda')) {
             hashValue = 'cepeda';
-            portfolioUrl = 'http://localhost:8080';
+            portfolioUrl = '127.0.0.1:5500/index.html';
         } else if (currentUrl.includes('#miranda')) {
             hashValue = 'miranda';
             portfolioUrl = 'https://bpmiranda3099.github.io/';
